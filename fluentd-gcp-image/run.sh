@@ -28,11 +28,11 @@ fi
 
 # App credentials
 #
-# TODO: Check if env var present
+# NOTE: Assumes $GOOGLE_APPLICATION_CREDENTIALS present and set to
+# '/etc/google/auth/application_default_credentials.json'
 #
 # @see https://cloud.google.com/logging/docs/agent/authorization
 if [ ! -z ${SERVICE_ACCOUNT_INFO+x} ]; then
-  GOOGLE_APPLICATION_CREDENTIALS='/etc/google/auth/application_default_credentials.json'
   mkdir -p /etc/google/auth
   echo $SERVICE_ACCOUNT_INFO > "$GOOGLE_APPLICATION_CREDENTIALS"
   chown root:root "$GOOGLE_APPLICATION_CREDENTIALS"
