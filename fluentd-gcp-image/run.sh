@@ -26,4 +26,17 @@ if [ ! -z "$(ls /host/lib/libsystemd* 2>/dev/null)" ]; then
   cp -a /host/lib/libsystemd* /lib/x86_64-linux-gnu/
 fi
 
+# App credentials
+#
+# TODO: Check if env var present
+#
+# @see https://cloud.google.com/logging/docs/agent/authorization
+if [ ! -z ${GOOGLE_APPLICATION_CREDENTIALS+x} ]; then
+  mkdir -p /etc/google/auth
+  echo $GOOGLE_APPLICATION_CREDENTIALS > \
+    /etc/google/auth/application_default_credentials.json
+  chown root:root /etc/google/auth/application_default_credentials.json
+  chmod 0400 /etc/google/auth/application_default_credentials.json
+fi
+
 /usr/local/bin/fluentd $@

@@ -45,17 +45,6 @@ RUN BUILD_DEPS="make gcc g++ libc6-dev ruby-dev" \
               /var/log/* \
               /var/tmp/*
 
-# App credentials
-#
-# TODO: Check if env var present
-#
-# @see https://cloud.google.com/logging/docs/agent/authorization
-RUN mkdir -p /etc/google/auth \
-    && echo $GOOGLE_APPLICATION_CREDENTIALS > \
-            /etc/google/auth/application_default_credentials.json \
-    && chown root:root /etc/google/auth/application_default_credentials.json \
-    && chmod 0400 /etc/google/auth/application_default_credentials.json
-
 # Copy the Fluentd configuration file for logging Docker container logs.
 COPY fluent.conf /etc/fluent/fluent.conf
 COPY run.sh /run.sh
