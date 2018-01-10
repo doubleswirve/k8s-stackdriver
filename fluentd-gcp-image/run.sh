@@ -31,12 +31,12 @@ fi
 # TODO: Check if env var present
 #
 # @see https://cloud.google.com/logging/docs/agent/authorization
-if [ ! -z ${GOOGLE_APPLICATION_CREDENTIALS+x} ]; then
+if [ ! -z ${SERVICE_ACCOUNT_INFO+x} ]; then
+  GOOGLE_APPLICATION_CREDENTIALS='/etc/google/auth/application_default_credentials.json'
   mkdir -p /etc/google/auth
-  echo $GOOGLE_APPLICATION_CREDENTIALS > \
-    /etc/google/auth/application_default_credentials.json
-  chown root:root /etc/google/auth/application_default_credentials.json
-  chmod 0400 /etc/google/auth/application_default_credentials.json
+  echo $SERVICE_ACCOUNT_INFO > "$GOOGLE_APPLICATION_CREDENTIALS"
+  chown root:root "$GOOGLE_APPLICATION_CREDENTIALS"
+  chmod 0400 "$GOOGLE_APPLICATION_CREDENTIALS"
 fi
 
 /usr/local/bin/fluentd $@
